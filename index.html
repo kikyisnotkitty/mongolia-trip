@@ -41,7 +41,6 @@
   <div class="row"><span class="dot" style="background:#264653"></span>机场（落地/还车）</div>
   <div class="row"><span style="display:inline-block;width:24px;border-top:4px solid #1d3557;margin-right:7px;"></span>自驾路线（呼市取车后）</div>
   <div class="row"><span style="display:inline-block;width:24px;border-top:3px dotted #2a9d8f;margin-right:7px;"></span>高铁（大同→呼市）</div>
-  <div class="row"><span style="display:inline-block;width:24px;border-top:3px dashed #888;margin-right:7px;"></span>飞机往返</div>
 </div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -111,13 +110,7 @@ L.polyline(routeCoords,{color:'#1d3557',weight:4,opacity:0.8}).addTo(map);
 L.polyline([[40.09,113.30],[40.842,111.749]],{color:'#2a9d8f',weight:3,dashArray:'2,8'}).addTo(map)
  .bindPopup('🚄 高铁 大同→呼和浩特 ~2.5h');
 
-// 飞机往返（杭州）
-const hz=[30.23,120.43];
-L.circleMarker(hz,{radius:7,color:'#fff',weight:2,fillColor:'#e76f51',fillOpacity:1}).addTo(map).bindPopup('✈ 杭州萧山机场（出发/返程）');
-L.polyline([hz,[40.06,113.48]],{color:'#888',weight:2,dashArray:'8,8'}).addTo(map); // 杭州→大同
-L.polyline([[39.49,109.86],hz],{color:'#888',weight:2,dashArray:'8,8'}).addTo(map); // 鄂尔多斯→杭州
-
-map.fitBounds(L.latLngBounds(routeCoords.concat([hz,[40.09,113.30]])).pad(0.1));
+map.fitBounds(L.latLngBounds(routeCoords.concat([[40.09,113.30],[40.06,113.48]])).pad(0.12));
 </script>
 </body>
 </html>
