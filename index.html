@@ -31,15 +31,16 @@
 <body>
 <div id="map"></div>
 <div class="title-box">
-  <h1>内蒙古 9 日自驾 · 海拉尔→乌拉盖→锡林浩特那达慕→乌兰哈达火山→鄂尔多斯</h1>
-  <p>7.14 杭州✈海拉尔取车 · 7.18 锡林浩特草原那达慕 · 7.22 鄂尔多斯还车✈杭州（约 1870km）</p>
+  <h1>晋蒙 9 日 · 大同→呼和浩特→乌兰哈达火山→辉腾锡勒→响沙湾→成吉思汗陵</h1>
+  <p>杭州✈大同（玩2天不租车）· 高铁→呼市取车 · 自驾约 800km · 鄂尔多斯还车✈杭州</p>
 </div>
 <div class="legend">
   <h3>行程图例</h3>
   <div class="row"><span class="dot" style="background:#e63946"></span>自驾停靠 / 住宿点（按 Day 编号）</div>
   <div class="row"><span class="dot" style="background:#2a9d8f"></span>沿途景点</div>
-  <div class="row"><span class="dot" style="background:#264653"></span>机场（取/还车）</div>
-  <div class="row"><span style="display:inline-block;width:24px;border-top:4px solid #1d3557;margin-right:7px;"></span>自驾路线</div>
+  <div class="row"><span class="dot" style="background:#264653"></span>机场（落地/还车）</div>
+  <div class="row"><span style="display:inline-block;width:24px;border-top:4px solid #1d3557;margin-right:7px;"></span>自驾路线（呼市取车后）</div>
+  <div class="row"><span style="display:inline-block;width:24px;border-top:3px dotted #2a9d8f;margin-right:7px;"></span>高铁（大同→呼市）</div>
   <div class="row"><span style="display:inline-block;width:24px;border-top:3px dashed #888;margin-right:7px;"></span>飞机往返</div>
 </div>
 
@@ -52,32 +53,27 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 
 // 主要停靠点（自驾顺序）
 const stops = [
-  {label:'1', day:'Day1 · 7.14', name:'海拉尔（取车）→ 莫尔格勒河', info:'当日驾驶 ~100km。上午落地取车；下午莫尔格勒河草原（机场北边）；傍晚市区夜市', coord:[49.212,119.736]},
-  {label:'2', day:'Day2 · 7.15', name:'海拉尔 → 乌拉盖（唯一长途日）', info:'当日驾驶 ~540km/7.5h。早出发、中途长休、沿途随停拍牛羊，傍晚草原日落', coord:[45.96,118.66]},
-  {label:'3', day:'Day3 · 7.16', name:'乌拉盖（全天深度）', info:'当日驾驶 ~80km。野狼谷、布林泉、九曲湾、乌拉盖湖栈道、湿地（芍药谷若开则加）', coord:[45.96,118.66]},
-  {label:'4', day:'Day4 · 7.17', name:'乌拉盖 → 锡林浩特', info:'当日驾驶 ~360km。沿途99号彩虹公路、平顶山；今晚务必住锡市', coord:[43.933,116.07]},
-  {label:'5', day:'Day5 · 7.18', name:'★ 锡林浩特草原那达慕（全天）', info:'当日驾驶 ~10km（市内）。9:30开幕，搏克/赛马/射箭/美食那达慕。住宿提前订、注意交通管制', coord:[43.85,116.10]},
-  {label:'6', day:'Day6 · 7.19', name:'锡林浩特 → 乌兰哈达火山', info:'当日驾驶 ~330km/4h。宇航服拍照、登火山口、火山日落；住察右后旗', coord:[41.44,112.78]},
-  {label:'7', day:'Day7 · 7.20', name:'辉腾锡勒 → 呼和浩特', info:'当日驾驶 ~180km。风车花海+小火车，下午大召寺、塞上老街', coord:[40.842,111.749]},
-  {label:'8', day:'Day8 · 7.21', name:'响沙湾（整天玩沙漠）', info:'当日驾驶 ~160km/2h。骑骆驼、滑沙、沙漠车、大漠日落', coord:[40.42,109.97]},
-  {label:'9', day:'Day9 · 7.22', name:'→ 鄂尔多斯机场还车返程', info:'当日驾驶 ~110km/1.5h。上午机动+还车+返程，从容不误机', coord:[39.49,109.86]},
+  {label:'1-2', day:'Day1-2', name:'大同（不租车）', info:'D1 杭州✈大同，下午云冈石窟；D2 悬空寺（可加应县木塔）、大同古城墙/华严寺。市区打车/接驳，悬空寺包车一日游', coord:[40.09,113.30]},
+  {label:'3', day:'Day3', name:'高铁→呼和浩特（取车）', info:'高铁大同→呼市 ~2.5h；呼市取车，大召寺、塞上老街蒙式手作', coord:[40.842,111.749]},
+  {label:'4-5', day:'Day4-5', name:'乌兰哈达火山（察右后旗）', info:'D4 呼市→火山 ~250km/3h，火山日落；D5 全天玩5/6/8号火山：宇航服拍照、登顶、捡玛瑙', coord:[41.44,112.78]},
+  {label:'6', day:'Day6', name:'辉腾锡勒黄花沟', info:'当日驾驶 ~90km。高山草甸+风车花海，坐小火车逛草原（轻松）', coord:[41.00,112.50]},
+  {label:'7-8', day:'Day7-8', name:'响沙湾（库布齐沙漠）', info:'D7 辉腾锡勒→响沙湾 ~280km/4h（过呼市）；D8 整天玩沙漠：骑骆驼、滑沙、沙漠车、大漠日落', coord:[40.42,109.97]},
+  {label:'9', day:'Day9', name:'成吉思汗陵 → 鄂尔多斯机场还车', info:'当日驾驶 ~160km。上午成吉思汗陵（伊金霍洛旗），离机场仅30km，下午还车返程', coord:[39.27,109.88]},
 ];
 
 // 沿途景点
 const sights = [
-  {name:'莫尔格勒河断崖观景台（天下第一曲水）', coord:[49.42,119.92]},
-  {name:'乌拉盖野狼谷（狼图腾影视基地）', coord:[46.02,118.70]},
-  {name:'野生芍药谷（花期 6.25-7.10，看天）', coord:[46.02,118.55]},
-  {name:'布林泉（狼图腾取景地）', coord:[46.10,119.00]},
-  {name:'乌拉盖九曲湾悬崖观景台', coord:[46.00,118.90]},
-  {name:'贺斯格淖尔湿地', coord:[45.85,118.80]},
-  {name:'99号彩虹音乐公路 / 平顶山小火山', coord:[44.6,116.9]},
+  {name:'云冈石窟（世界遗产，北魏石窟）', coord:[40.11,113.13]},
+  {name:'悬空寺（浑源，峭壁古建）', coord:[39.66,113.70]},
+  {name:'应县木塔（辽代纯木塔，可选顺路）', coord:[39.55,113.19]},
   {name:'乌兰哈达火山群（5/6/8号）', coord:[41.59,112.78]},
+  {name:'辉腾锡勒黄花沟（高山草甸+风车）', coord:[41.00,112.50]},
+  {name:'成吉思汗陵（蒙古族圣地）', coord:[39.27,109.88]},
 ];
 
 // 机场
 const airports = [
-  {name:'海拉尔东山机场（取车起点）', coord:[49.205,119.825]},
+  {name:'大同云冈机场（落地起点）', coord:[40.06,113.48]},
   {name:'鄂尔多斯伊金霍洛机场（还车终点）', coord:[39.49,109.86]},
 ];
 
@@ -98,32 +94,30 @@ airports.forEach(a=>{
    .bindPopup(`✈ ${a.name}`);
 });
 
-// 自驾路线（按天连接）
+// 自驾路线（呼市取车后，按天连接）
 const routeCoords = [
-  [49.205,119.825], // 海拉尔机场
-  [49.212,119.736], // 海拉尔(D1)
-  [49.42,119.92],   // 莫尔格勒河(D1，海拉尔机场北边)
-  [49.212,119.736], // 回海拉尔住
-  [45.96,118.66],   // 乌拉盖(D2 长途转场)
-  [46.10,119.00],   // 乌拉盖深度环线(D3)
-  [45.96,118.66],   // 回乌拉盖
-  [43.933,116.07],  // 锡林浩特(D4-5 含7.18那达慕)
-  [41.59,112.78],   // 乌兰哈达火山(D6)
+  [40.842,111.749], // 呼和浩特取车(D3)
+  [41.59,112.78],   // 乌兰哈达火山(D4-5)
   [41.44,112.78],   // 察右后旗住
-  [41.00,112.50],   // 辉腾锡勒黄花沟(D7)
-  [40.842,111.749], // 呼和浩特(D7)
-  [40.42,109.97],   // 响沙湾(D8)
-  [39.49,109.86],   // 鄂尔多斯机场(D9)
+  [41.00,112.50],   // 辉腾锡勒黄花沟(D6)
+  [40.842,111.749], // 过呼市(D7)
+  [40.42,109.97],   // 响沙湾(D7-8)
+  [39.27,109.88],   // 成吉思汗陵(D9)
+  [39.49,109.86],   // 鄂尔多斯机场(D9 还车)
 ];
 L.polyline(routeCoords,{color:'#1d3557',weight:4,opacity:0.8}).addTo(map);
+
+// 高铁段：大同 → 呼和浩特
+L.polyline([[40.09,113.30],[40.842,111.749]],{color:'#2a9d8f',weight:3,dashArray:'2,8'}).addTo(map)
+ .bindPopup('🚄 高铁 大同→呼和浩特 ~2.5h');
 
 // 飞机往返（杭州）
 const hz=[30.23,120.43];
 L.circleMarker(hz,{radius:7,color:'#fff',weight:2,fillColor:'#e76f51',fillOpacity:1}).addTo(map).bindPopup('✈ 杭州萧山机场（出发/返程）');
-L.polyline([hz,[49.205,119.825]],{color:'#888',weight:2,dashArray:'8,8'}).addTo(map);
-L.polyline([[39.49,109.86],hz],{color:'#888',weight:2,dashArray:'8,8'}).addTo(map);
+L.polyline([hz,[40.06,113.48]],{color:'#888',weight:2,dashArray:'8,8'}).addTo(map); // 杭州→大同
+L.polyline([[39.49,109.86],hz],{color:'#888',weight:2,dashArray:'8,8'}).addTo(map); // 鄂尔多斯→杭州
 
-map.fitBounds(L.latLngBounds(routeCoords.concat([hz])).pad(0.1));
+map.fitBounds(L.latLngBounds(routeCoords.concat([hz,[40.09,113.30]])).pad(0.1));
 </script>
 </body>
 </html>
